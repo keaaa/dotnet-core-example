@@ -75,7 +75,7 @@ namespace oauthExample.Utils
         /// </summary>
         /// <param name="resourceId"></param>
         /// <returns></returns>
-        public async Task<string> GetAccessTokenForResource(string resourceId)
+        public async Task<string> GetDelegateAccessTokenForResource(string resourceId)
         {
             var result = await _context.AcquireTokenAsync(resourceId, _appCredentials, new UserAssertion(_userToken)).ConfigureAwait(false);
             return result.AccessToken;

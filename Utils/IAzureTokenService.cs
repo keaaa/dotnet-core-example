@@ -6,7 +6,7 @@ namespace oauthExample.Utils
     {
         Task<string> GetApplicationToken(string resource);
         Task<string> GetApplicationToken(string authority, string resource, string scope);
-        Task<string> GetAccessTokenForResource(string resourceId);
+        Task<string> GetDelegateAccessTokenForResource(string resourceId);
         string GetUserId();
     }
 }

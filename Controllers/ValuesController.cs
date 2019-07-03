@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using oauthExample.Utils;
 
 namespace oauthExample.Controllers
 {
@@ -15,11 +9,9 @@ namespace oauthExample.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly IAzureTokenService _adminService;
-
-        public ValuesController(IAzureTokenService adminService)
+        public ValuesController()
         {
-            _adminService = adminService;
+            
         }
 
         // GET api/values
@@ -32,25 +24,9 @@ namespace oauthExample.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public ActionResult<string> Get(int id)
         {
-            var graphApi = "https://graph.microsoft.com";
-            var currentUser = "/v1.0/me?$select=id,displayName,mail,officeLocation,userPrincipalName";
-
-            var delegatedToken = await _adminService.GetAccessTokenForResource(graphApi);
-            
-            var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(graphApi)
-            };
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", delegatedToken);
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-            var userResponse = await httpClient.GetAsync(currentUser);
-            var user = await userResponse.Content.ReadAsStringAsync();
-
-            return Ok(user);
+            return "my id " + id;
         }
 
         // POST api/values
